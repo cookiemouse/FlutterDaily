@@ -22,8 +22,6 @@ class Urls {
   static const String THEMES_CONTENT = 'https://news-at.zhihu.com/api/4/theme/11';
 
   //  某个主题之前的内容
-  static const String THEMES_BEFORE = 'https://news-at.zhihu.com/api/4/section/#{section id}/before/#{timestamp}';
+  static const String THEMES_BEFORE = 'https://news-at.zhihu.com/api/4/theme/#{theme_id}/before/#{story_id}';
 
-  //  今日热闻
-  static const String HOT = 'https://news-at.zhihu.com/api/3/news/hot';
 }

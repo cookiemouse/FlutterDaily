@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+int _selectIndex = 0;
+
 class MyDrawer extends StatelessWidget {
   final List<String> items;
   final onDrawerClick;
@@ -13,18 +15,24 @@ class MyDrawer extends StatelessWidget {
             itemCount: items.length,
             itemBuilder: (context, index) {
               return new ListTile(
+                selected: isSelected(index),
                 title: new Text('${items[index]}'),
                 onTap: (){
-                  _closeNavigation(context);
+                  _selectIndex = index;
+                  closeNavigation(context);
                   onDrawerClick(index);
                 },
               );
             }));
   }
-}
 
+  //  关闭Drawer
+  void closeNavigation(BuildContext context){
+    Navigator.pop(context);
+  }
 
-//  关闭Drawer
-void _closeNavigation(BuildContext context){
-  Navigator.pop(context);
+  //  item背景
+  bool isSelected(int index){
+    return index == _selectIndex;
+  }
 }
