@@ -15,19 +15,22 @@ ThemeBean _$ThemeBeanFromJson(Map<String, dynamic> json) => new ThemeBean(
         ?.map((e) => e == null
             ? null
             : new StoriesBean.fromJson(e as Map<String, dynamic>))
-        ?.toList());
+        ?.toList(),
+    json['image'] as String);
 
 abstract class _$ThemeBeanSerializerMixin {
   String get description;
   String get background;
   int get color;
   String get name;
+  String get image;
   List<StoriesBean> get stories;
   Map<String, dynamic> toJson() => <String, dynamic>{
         'description': description,
         'background': background,
         'color': color,
         'name': name,
+        'image': image,
         'stories': stories
       };
 }

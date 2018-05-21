@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'pages/MyDrawer.dart';
 import 'pages/HomePage.dart';
+import 'pages/ThemePage.dart';
 import 'data/BaseData.dart';
-import 'data/Urls.dart';
 
 void main() => runApp(new MyApp());
 
@@ -46,6 +46,8 @@ class _AppPageState extends State<_AppPage> {
 
   @override
   Widget build(BuildContext context) {
+    print('_mDrawerIndex--> $_mDrawerIndex');
+    print('page--> ${_mDrawerIndex == 0 ? new HomePage(_mDrawerIndex) : new ThemePage(_mDrawerIndex)}');
     return new Scaffold(
       drawer: new MyDrawer(
         items: items,
@@ -59,7 +61,7 @@ class _AppPageState extends State<_AppPage> {
         title: getTitle(_mDrawerIndex),
         centerTitle: true,
       ),
-      body: new HomePage(_mDrawerIndex),
+      body: _mDrawerIndex == 0 ? new HomePage(_mDrawerIndex) : new ThemePage(_mDrawerIndex),
     );
   }
 

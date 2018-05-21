@@ -8,9 +8,10 @@ class ThemeBean{
   String background;
   int color;
   String name;
+  String image;
   List<StoriesBean> stories;
 
-  ThemeBean(this.description, this.background, this.color, this.name, this.stories);
+  ThemeBean(this.description, this.background, this.color, this.name, this.stories, this.image);
 
   factory ThemeBean.fromJson(Map<String, dynamic> json) => _$ThemeBeanFromJson(json);
 }
@@ -33,7 +34,7 @@ class StoriesBean{
   String title;
   int type;
   int id;
-  List<String> images;
+  List<String> images = [];
 
   StoriesBean(this.title, this.type, this.id);
 
