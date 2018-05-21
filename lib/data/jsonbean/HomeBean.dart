@@ -6,6 +6,7 @@ part 'HomeBean.g.dart';
 class HomeBean extends Object with _$HomeBeanSerializerMixin{
   String date;
   List<StoryBean> stories;
+  List<TopStoriesBean> top_stories;
 
 
   HomeBean(this.date, this.stories);
@@ -33,4 +34,25 @@ class StoryBean extends Object with _$StoryBeanSerializerMixin{
       );
 
   factory StoryBean.fromJson(Map<String, dynamic> json) => _$StoryBeanFromJson(json);
+}
+
+@JsonSerializable()
+class TopStoriesBean extends Object with _$TopStoriesBeanSerializerMixin{
+  String image;
+  int type;
+  int id;
+  String ga_prefix;
+  String title;
+
+  TopStoriesBean(
+      this.image,
+      this.type,
+      this.id,
+      this.ga_prefix,
+      this.title
+      );
+
+  factory TopStoriesBean.fromJson(Map<String ,dynamic> json) => _$TopStoriesBeanFromJson(json);
+
+
 }

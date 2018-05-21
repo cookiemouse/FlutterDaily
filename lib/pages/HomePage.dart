@@ -16,10 +16,37 @@ class HomePage extends StatelessWidget {
             future: fetchData(),
             builder: (context, snapshot) {
               if (snapshot.hasData) {
-                List<StoryBean> items = snapshot.data.stories;
+                List<StoryBean> storyItems = snapshot.data.stories;
+                if (null != storyItems[0]) {
+                  storyItems.insert(0, null);
+                }
+                List<TopStoriesBean> topItems = snapshot.data.top_stories;
                 return new ListView.builder(
-                    itemCount: items.length,
+                    itemCount: topItems.length,
                     itemBuilder: (context, index) {
+                      if (0 == index) {
+                        return new Container(
+                          height: 220.0,
+                          child: new PageView.builder(
+                              pageSnapping: true,
+                              itemCount: topItems.length,
+                              itemBuilder: (context, indexTop) {
+                                return new GestureDetector(
+                                  child: new Container(
+                                    child: new Image.network(
+                                      topItems[indexTop].image,
+                                      fit: BoxFit.cover,
+                                      height: 220.0,
+                                    ),
+                                  ),
+                                  onTap: () {
+                                    //TODO 点击事件
+                                  },
+                                );
+                              }
+                          ),
+                        );
+                      }
                       return new ListTile(
                         title: new Container(
                           padding: const EdgeInsets.all(5.0),
@@ -27,13 +54,13 @@ class HomePage extends StatelessWidget {
                             children: <Widget>[
                               new Expanded(
                                 child: new Text(
-                                  items[index].title,
+                                  storyItems[index].title,
                                   style: new TextStyle(fontSize: 14.0),
                                   textAlign: TextAlign.start,
                                 ),
                               ),
                               new Image.network(
-                                items[index].images[0],
+                                storyItems[index].images[0],
                                 width: 100.0,
                                 height: 80.0,
                                 alignment: Alignment.centerRight,

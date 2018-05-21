@@ -12,13 +12,22 @@ HomeBean _$HomeBeanFromJson(Map<String, dynamic> json) => new HomeBean(
         ?.map((e) => e == null
             ? null
             : new StoryBean.fromJson(e as Map<String, dynamic>))
-        ?.toList());
+        ?.toList())
+  ..top_stories = (json['top_stories'] as List)
+      ?.map((e) => e == null
+          ? null
+          : new TopStoriesBean.fromJson(e as Map<String, dynamic>))
+      ?.toList();
 
 abstract class _$HomeBeanSerializerMixin {
   String get date;
   List<StoryBean> get stories;
-  Map<String, dynamic> toJson() =>
-      <String, dynamic>{'date': date, 'stories': stories};
+  List<TopStoriesBean> get top_stories;
+  Map<String, dynamic> toJson() => <String, dynamic>{
+        'date': date,
+        'stories': stories,
+        'top_stories': top_stories
+      };
 }
 
 StoryBean _$StoryBeanFromJson(Map<String, dynamic> json) => new StoryBean(
@@ -43,5 +52,28 @@ abstract class _$StoryBeanSerializerMixin {
         'multipic': multipic,
         'type': type,
         'id': id
+      };
+}
+
+TopStoriesBean _$TopStoriesBeanFromJson(Map<String, dynamic> json) =>
+    new TopStoriesBean(
+        json['image'] as String,
+        json['type'] as int,
+        json['id'] as int,
+        json['ga_prefix'] as String,
+        json['title'] as String);
+
+abstract class _$TopStoriesBeanSerializerMixin {
+  String get image;
+  int get type;
+  int get id;
+  String get ga_prefix;
+  String get title;
+  Map<String, dynamic> toJson() => <String, dynamic>{
+        'image': image,
+        'type': type,
+        'id': id,
+        'ga_prefix': ga_prefix,
+        'title': title
       };
 }
