@@ -19,7 +19,7 @@ class Urls {
   static const String THEMES_LIST = 'https://news-at.zhihu.com/api/4/themes';
 
   //  主题内容
-  static const String THEMES_CONTENT = 'https://news-at.zhihu.com/api/4/theme/11';
+  static const String THEMES_CONTENT = 'https://news-at.zhihu.com/api/4/theme/';  //{尾部加主题id}
 
   //  某个主题之前的内容
   static const String THEMES_BEFORE = 'https://news-at.zhihu.com/api/4/theme/#{theme_id}/before/#{story_id}';

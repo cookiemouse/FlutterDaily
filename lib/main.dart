@@ -1,23 +1,25 @@
 import 'package:flutter/material.dart';
 import 'pages/MyDrawer.dart';
 import 'pages/HomePage.dart';
+import 'data/BaseData.dart';
+import 'data/Urls.dart';
 
 void main() => runApp(new MyApp());
 
 final items = [
-  '首页',
-  '日常心理学',
-  '用户推荐日报',
-  '电影日报',
-  '不许无聊',
-  '设计日报',
-  '大公司日报',
-  '财经日报',
-  '互联网安全',
-  '开始游戏',
-  '音乐日报',
-  '动漫日报',
-  '体育日报',
+  mBaseData[0].title,
+  mBaseData[1].title,
+  mBaseData[2].title,
+  mBaseData[3].title,
+  mBaseData[4].title,
+  mBaseData[5].title,
+  mBaseData[6].title,
+  mBaseData[7].title,
+  mBaseData[8].title,
+  mBaseData[9].title,
+  mBaseData[10].title,
+  mBaseData[11].title,
+  mBaseData[12].title,
 ];
 
 int _mDrawerIndex = 0;
@@ -40,14 +42,14 @@ class _AppPage extends StatefulWidget {
   }
 }
 
-class _AppPageState extends State<_AppPage>{
+class _AppPageState extends State<_AppPage> {
 
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
       drawer: new MyDrawer(
         items: items,
-        onDrawerClick: (index){
+        onDrawerClick: (index) {
           setState(() {
             _mDrawerIndex = index;
           });
@@ -57,11 +59,11 @@ class _AppPageState extends State<_AppPage>{
         title: getTitle(_mDrawerIndex),
         centerTitle: true,
       ),
-      body: new HomePage(),
+      body: new HomePage(_mDrawerIndex),
     );
   }
 
-  Text getTitle(int index){
-    return new Text(items[index]);
+  Text getTitle(int index) {
+    return new Text(mBaseData[index].title);
   }
 }
