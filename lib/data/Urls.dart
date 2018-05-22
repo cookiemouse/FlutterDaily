@@ -25,5 +25,5 @@ class Urls {
   static const String THEMES_BEFORE = 'https://news-at.zhihu.com/api/4/theme/#{theme_id}/before/#{story_id}';
 
   //  具体内容
-  static const String CONTENT = 'https://news-at.zhihu.com/api/4/news/3892357';  //{尾部加内容id}
+  static const String CONTENT = 'https://news-at.zhihu.com/api/4/news/';  //{尾部加内容id}
 }

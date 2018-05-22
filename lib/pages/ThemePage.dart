@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_daily/data/jsonbean/ThemeBean.dart';
 import 'package:flutter_daily/data/BaseData.dart';
-import 'DetailPage.dart';
+import 'DetailPage2.dart';
 
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -74,7 +74,7 @@ class ThemePage extends StatelessWidget {
                             Navigator.push(
                               context,
                               new MaterialPageRoute(
-                                builder: (context) => new DetailPage(),
+                                builder: (context) => new DetailPage2(storiesItems[index].id),
                               ),
                             );
                           },
@@ -102,7 +102,7 @@ class ThemePage extends StatelessWidget {
                             Navigator.push(
                               context,
                               new MaterialPageRoute(
-                                builder: (context) => new DetailPage(),
+                                builder: (context) => new DetailPage2(storiesItems[index].id),
                               ),
                             );
                           },
