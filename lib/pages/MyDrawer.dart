@@ -13,6 +13,7 @@ class MyDrawer extends StatelessWidget {
     return new Drawer(
         child: new ListView.builder(
             itemCount: items.length,
+            controller: new ScrollController(keepScrollOffset: false),
             itemBuilder: (context, index) {
               return new ListTile(
                 selected: isSelected(index),

@@ -14,7 +14,7 @@ ThemeBean _$ThemeBeanFromJson(Map<String, dynamic> json) => new ThemeBean(
     (json['stories'] as List)
         ?.map((e) => e == null
             ? null
-            : new StoriesBean.fromJson(e as Map<String, dynamic>))
+            : new ThemeStoriesBean.fromJson(e as Map<String, dynamic>))
         ?.toList(),
     json['image'] as String);
 
@@ -24,7 +24,7 @@ abstract class _$ThemeBeanSerializerMixin {
   int get color;
   String get name;
   String get image;
-  List<StoriesBean> get stories;
+  List<ThemeStoriesBean> get stories;
   Map<String, dynamic> toJson() => <String, dynamic>{
         'description': description,
         'background': background,
@@ -57,11 +57,12 @@ abstract class _$EditorsBeanSerializerMixin {
       };
 }
 
-StoriesBean _$StoriesBeanFromJson(Map<String, dynamic> json) => new StoriesBean(
-    json['title'] as String, json['type'] as int, json['id'] as int)
-  ..images = (json['images'] as List)?.map((e) => e as String)?.toList();
+ThemeStoriesBean _$ThemeStoriesBeanFromJson(Map<String, dynamic> json) =>
+    new ThemeStoriesBean(
+        json['title'] as String, json['type'] as int, json['id'] as int)
+      ..images = (json['images'] as List)?.map((e) => e as String)?.toList();
 
-abstract class _$StoriesBeanSerializerMixin {
+abstract class _$ThemeStoriesBeanSerializerMixin {
   String get title;
   int get type;
   int get id;

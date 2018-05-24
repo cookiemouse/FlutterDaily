@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_daily/data/jsonbean/ThemeBean.dart';
+import 'package:flutter_daily/data/jsonbean/ThemeMoreBean.dart';
 import 'package:flutter_daily/data/BaseData.dart';
 import 'DetailPage.dart';
 import 'DetailPage2.dart';
@@ -11,12 +12,44 @@ import 'DetailPage4.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-class ThemePage extends StatelessWidget {
+int _mIndex;
+bool _mIsMore = false;
+int _mLastId;
 
-  final int _mIndex;
+class ThemePage extends StatefulWidget {
+  final int index;
 
-  ThemePage(this._mIndex) {
+  ThemePage(this.index) {
     print('_mIndex--> $_mIndex');
+    _mIndex = index;
+  }
+
+  @override
+  State createState() {
+    return new _ThemePageState();
+  }
+}
+
+class _ThemePageState extends State<ThemePage> {
+  final ScrollController _controller =
+      new ScrollController(initialScrollOffset: 0.0, keepScrollOffset: false);
+
+  List<ThemeStoriesBean> storiesItems;
+
+  _ThemePageState() {
+    _controller.addListener(() {
+      //todo 监听
+      double maxExtent = _controller.position.maxScrollExtent;
+      double pixels = _controller.position.pixels;
+      if (maxExtent == pixels) {
+        setState(() {
+          _mIsMore = true;
+          int last = storiesItems.length - 1;
+          _mLastId = storiesItems[last].id;
+          fetchMoreData(_mLastId);
+        });
+      }
+    });
   }
 
   @override
@@ -25,19 +58,27 @@ class ThemePage extends StatelessWidget {
       body: new Center(
         child: new RefreshIndicator(
           child: new FutureBuilder(
-            future: fetchData(),
+            future: _mIsMore ? fetchMoreData(_mLastId) : fetchData(),
             builder: (context, snapshot) {
               print('snapshot--> ${snapshot.toString()}');
+              print('snapshot.data--> ${snapshot.data.toString()}');
               if (snapshot.hasData) {
-                String description = snapshot.data.description;
-                print('description--> $description');
+                if (_mIsMore && snapshot.data.runtimeType == ThemeMoreBean) {
+                  storiesItems.addAll(snapshot.data.stories);
+                } else if (snapshot.data.runtimeType == ThemeBean){
+                  String description = snapshot.data.description;
+                  print('description--> $description');
+                  storiesItems = snapshot.data.stories;
 
-                List<StoriesBean> storiesItems = snapshot.data.stories;
-                if (null != storiesItems[0]) {
-                  storiesItems.insert(0, null);
+                  if (null != storiesItems[0]) {
+                    storiesItems.insert(0, null);
+                  }
                 }
+
                 return new ListView.builder(
+                    shrinkWrap: true,
                     itemCount: storiesItems.length,
+                    controller: _controller,
                     itemBuilder: (context, index) {
                       if (0 == index) {
                         return new Image.network(
@@ -46,6 +87,7 @@ class ThemePage extends StatelessWidget {
                           height: 220.0,
                         );
                       }
+                      snapshot = null;
                       List<String> images = storiesItems[index].images;
                       print('images--> $images');
                       if (null != images) {
@@ -77,7 +119,8 @@ class ThemePage extends StatelessWidget {
                             Navigator.push(
                               context,
                               new MaterialPageRoute(
-                                builder: (context) => new DetailPage4(storiesItems[index].id),
+                                builder: (context) =>
+                                    new DetailPage4(storiesItems[index].id),
                               ),
                             );
                           },
@@ -105,7 +148,8 @@ class ThemePage extends StatelessWidget {
                             Navigator.push(
                               context,
                               new MaterialPageRoute(
-                                builder: (context) => new DetailPage4(storiesItems[index].id),
+                                builder: (context) =>
+                                    new DetailPage4(storiesItems[index].id),
                               ),
                             );
                           },
@@ -139,9 +183,18 @@ class ThemePage extends StatelessWidget {
     return new ThemeBean.fromJson(responseJson);
   }
 
-  Future<Null> _pullToRefresh() async {
-    return fetchData();
+  Future<Object> fetchMoreData(int id) async {
+    print('fetchMoreData--> $id');
+    print('fetchMoreData.url--> ${getUrl(_mIndex) + r'/before/' +
+        id.toString()}');
+    final response =
+        await http.get(getUrl(_mIndex) + r'/before/' + id.toString());
+    final responseJson = json.decode(response.body);
+    return new ThemeMoreBean.fromJson(responseJson);
   }
 
+  Future<Null> _pullToRefresh() async {
+    _mIsMore = false;
+    return fetchData();
+  }
 }
-

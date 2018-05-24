@@ -9,7 +9,7 @@ class ThemeBean{
   int color;
   String name;
   String image;
-  List<StoriesBean> stories;
+  List<ThemeStoriesBean> stories;
 
   ThemeBean(this.description, this.background, this.color, this.name, this.stories, this.image);
 
@@ -30,13 +30,13 @@ class EditorsBean{
 }
 
 @JsonSerializable()
-class StoriesBean{
+class ThemeStoriesBean{
   String title;
   int type;
   int id;
   List<String> images = [];
 
-  StoriesBean(this.title, this.type, this.id);
+  ThemeStoriesBean(this.title, this.type, this.id);
 
-  factory StoriesBean.fromJson(Map<String, dynamic> json) => _$StoriesBeanFromJson(json);
+  factory ThemeStoriesBean.fromJson(Map<String, dynamic> json) => _$ThemeStoriesBeanFromJson(json);
 }
